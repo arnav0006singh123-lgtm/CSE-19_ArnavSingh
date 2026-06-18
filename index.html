@@ -1,169 +1,163 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<title>FitLife</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Result Calculator</title>
 
-<!-- Tailwind CSS CDN -->
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
 
-<script src="https://cdn.tailwindcss.com"></script>
+body{
+    background:#f4f6f9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
 
+.container{
+    background:white;
+    padding:25px;
+    width:400px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#333;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#007bff;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+.result{
+    margin-top:20px;
+    padding:15px;
+    background:#eef5ff;
+    border-radius:5px;
+    display:none;
+}
+
+.result h3{
+    margin-bottom:10px;
+}
+
+.pass{
+    color:green;
+    font-weight:bold;
+}
+
+.fail{
+    color:red;
+    font-weight:bold;
+}
+</style>
 </head>
 
-<body class="bg-gray-200 font-sans">
+<body>
 
-<!-- HEADER -->
+<div class="container">
+    <h2>Student Result Calculator</h2>
 
-<header class="bg-gradient-to-r from-slate-600 to-indigo-400 text-white p-4">
+    <input type="text" id="name" placeholder="Enter Student Name">
 
-<div class="flex justify-between items-center">
+    <input type="number" id="m1" placeholder="Subject 1 Marks">
+    <input type="number" id="m2" placeholder="Subject 2 Marks">
+    <input type="number" id="m3" placeholder="Subject 3 Marks">
+    <input type="number" id="m4" placeholder="Subject 4 Marks">
+    <input type="number" id="m5" placeholder="Subject 5 Marks">
 
-<h1 class="text-xl font-bold">FitLife</h1>
+    <button onclick="calculateResult()">Calculate Result</button>
 
-<nav class="space-x-4 text-sm">
-
-<a href="#" class="hover:text-gray-200">Home</a>
-
-<a href="#" class="hover:text-gray-200">Programs</a>
-
-<a href="#" class="hover:text-gray-200">Trainers</a>
-
-<a href="#" class="hover:text-gray-200">Contact</a>
-
-</nav>
-
+    <div class="result" id="resultBox">
+        <h3>Result</h3>
+        <p id="output"></p>
+    </div>
 </div>
 
-</header>
+<script>
+function calculateResult() {
 
-<!-- HERO SECTION -->
+    let name = document.getElementById("name").value;
 
-<section class="bg-gradient-to-r from-sky-200 to-indigo-400 text-white text-center py-16">
+    let m1 = Number(document.getElementById("m1").value);
+    let m2 = Number(document.getElementById("m2").value);
+    let m3 = Number(document.getElementById("m3").value);
+    let m4 = Number(document.getElementById("m4").value);
+    let m5 = Number(document.getElementById("m5").value);
 
-<h2 class="text-4xl font-bold mb-4">
+    if(name === "" || isNaN(m1) || isNaN(m2) || isNaN(m3) || isNaN(m4) || isNaN(m5)){
+        alert("Please fill all fields.");
+        return;
+    }
 
-Transform Your Body & Mind
+    let total = m1 + m2 + m3 + m4 + m5;
+    let percentage = (total / 500) * 100;
 
-</h2>
+    let grade;
 
-<p class="mb-6 text-lg">
+    if(percentage >= 90){
+        grade = "A+";
+    }
+    else if(percentage >= 80){
+        grade = "A";
+    }
+    else if(percentage >= 70){
+        grade = "B";
+    }
+    else if(percentage >= 60){
+        grade = "C";
+    }
+    else if(percentage >= 40){
+        grade = "D";
+    }
+    else{
+        grade = "Fail";
+    }
 
-Join FitLife today and achieve your fitness goals with expert trainers.
+    let status = percentage >= 40
+        ? '<span class="pass">PASS</span>'
+        : '<span class="fail">FAIL</span>';
 
-</p>
+    document.getElementById("resultBox").style.display = "block";
 
-<button class="bg-gray-200 text-gray-700 px-6 py-2 rounded-md font-semibold hover:bg-
-
-white">
-
-Join Now
-
-</button>
-10
-
-11
-
-|<p class="mb-6 text-lg">
-
-Join FitLife today and achieve your fitness goals with expert trainers.
-
-</p>
-
-<button class="bg-gray-200 text-gray-700 px-6 py-2 rounded-md font-semibold hover:bg-
-
-white">
-
-Join Now
-
-</button>
-</section>
-
-|<!-- PROGRAM SECTION -->
-
-<section class="py-12 px-6">
-
-<h3 class="text-3xl font-bold text-center mb-10">
-
-Our Programs
-
-</h3>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> <!-- Card 1 -->
-
-<div class="bg-gray-100 p-6 rounded-lg shadow text-center">
-
-<h4 class="text-red-600 font-bold mb-2">
-
-Weight Training
-
-</h4>
-
-<p>
-
-Build strength and muscle with guided weight training programs.
-
-</p>
-
-</div>
-
-<!-- Card 2 -->
-
-<div class="bg-gray-100 p-6 rounded-lg shadow text-center">
-
-<h4 class="text-red-600 font-bold mb-2">
-
-Yoga Classes
-
-</h4>
-
-<p>
-
-Improve flexibility and mental wellness through yoga sessions.
-
-</p>
-
-</div>
-
-<!-- Card 3 -->
-
-<div class="bg-gray-100 p-6 rounded-lg shadow text-center">
-
-<h4 class="text-red-600 font-bold mb-2">
-
-Diet Plans
-
-</h4>
-
-Personalized diet plans to complement your fitness routine.
-
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- FOOTER -->
-
-<footer class="bg-gradient-to-r from-sky-300 to-indigo-400 text-white text-center py-6"> <p>© 2026 FitLife | All Rights Reserved</p>
-
-<p class="text-sm mt-1">
-
-Contact: info@fitlife.com
-
-</p>
-
-</footer>
+    document.getElementById("output").innerHTML = `
+        <strong>Name:</strong> ${name}<br><br>
+        <strong>Total Marks:</strong> ${total} / 500<br><br>
+        <strong>Percentage:</strong> ${percentage.toFixed(2)}%<br><br>
+        <strong>Grade:</strong> ${grade}<br><br>
+        <strong>Status:</strong> ${status}
+    `;
+}
+</script>
 
 </body>
-
 </html>
-
-Expected Output:
